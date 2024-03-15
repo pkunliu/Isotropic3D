@@ -3,7 +3,9 @@ Official implementation for Isotropic3D: Image-to-3D Generation Based on a Singl
 
 ## | [Project Page](https://isotropic3d.github.io/) | [Paper](https://isotropic3d.github.io/) | [Weights](https://huggingface.co/pkunliu/Isotropic3D)
 
-https://github.com/pkunliu/Isotropic3D/assets/48075709/cfc49def-f86d-48fb-9583-d6522ecb7f05
+
+https://github.com/pkunliu/Isotropic3D/assets/48075709/412a040e-386e-4520-82b6-0b0a1a217a1c
+
 
 
 
