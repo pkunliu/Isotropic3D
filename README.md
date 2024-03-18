@@ -1,7 +1,7 @@
 # Isotropic3D
 Official implementation for Isotropic3D: Image-to-3D Generation Based on a Single CLIP Embedding
 
-## | [Project Page](https://isotropic3d.github.io/) | [Paper](https://isotropic3d.github.io/) | [Weights](https://huggingface.co/pkunliu/Isotropic3D)
+## | [Project Page](https://isotropic3d.github.io/) | [Paper](https://arxiv.org/abs/2403.10395) | [Weights](https://huggingface.co/pkunliu/Isotropic3D)
 
 
 https://github.com/pkunliu/Isotropic3D/assets/48075709/412a040e-386e-4520-82b6-0b0a1a217a1c
@@ -67,7 +67,10 @@ Thanks to the maintainers for their contribution to the community!
 If you find Isotropic3D helpful, please consider citing:
 
 ```
-@article{
-  
+@article{liu2024isotropic3d,
+  title={Isotropic3D: Image-to-3D Generation Based on a Single CLIP Embedding}, 
+  author={Liu, Pengkun and Wang, Yikai and Sun, Fuchun and Li, Jiafang and Xiao, Hang and Xue, Hongxiang and Wang, Xinzhou},
+  journal={arXiv preprint arXiv:2403.10395},
+  year={2024}
 }
 ```
