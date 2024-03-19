@@ -1,7 +1,7 @@
 # Isotropic3D
 Official implementation for Isotropic3D: Image-to-3D Generation Based on a Single CLIP Embedding
 
-## | [Project Page](https://isotropic3d.github.io/) | [Paper](https://arxiv.org/abs/2403.10395) | [Weights](https://huggingface.co/pkunliu/Isotropic3D)
+## | [Project Page](https://isotropic3d.github.io/) | [Paper](https://arxiv.org/abs/2403.10395) | [Weight](https://huggingface.co/pkunliu/Isotropic3D)
 
 
 https://github.com/pkunliu/Isotropic3D/assets/48075709/412a040e-386e-4520-82b6-0b0a1a217a1c
@@ -21,7 +21,9 @@ pip install -r requirements.txt
 
 ## Quickstart
 
-We use the configuration with soft-shading. It would need an A100 GPU in most cases to compute normal.
+1. Download `isotropic3d.ckpt` from https://huggingface.co/pkunliu/Isotropic3D to `ckpt/isotropic3d.ckpt`
+
+2. We use the configuration with soft-shading. It would need an A100 GPU in most cases to compute normal. To generate 3D content, run:
 ```sh
 export PYTHONPATH=$PYTHONPATH:./isotropic
 python launch.py \
