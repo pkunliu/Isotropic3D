@@ -56,6 +56,17 @@ python launch.py --config path/to/trial/dir/configs/parsed.yaml --test --gpu 0 r
 python launch.py --config path/to/trial/dir/configs/parsed.yaml --train --gpu 0 system.weights=path/to/trial/dir/ckpts/last.ckpt
 ```
 
+### Export meshes
+
+```sh
+# exports obj+mtl
+python launch.py --config path/to/trial/dir/configs/parsed.yaml --export --gpu 0 resume=path/to/trial/dir/ckpts/last.ckpt system.exporter_type=mesh-exporter
+# specify system.exporter.fmt=obj to get obj with vertex colors
+# you may also add system.exporter.save_uv=false to accelerate the process, suitable for a quick peek of the result
+python launch.py --config path/to/trial/dir/configs/parsed.yaml --export --gpu 0 resume=path/to/trial/dir/ckpts/last.ckpt system.exporter_type=mesh-exporter system.exporter.fmt=obj
+# use marching cubes of higher resolutions to get more detailed models
+python launch.py --config path/to/trial/dir/configs/parsed.yaml --export --gpu 0 resume=path/to/trial/dir/ckpts/last.ckpt system.exporter_type=mesh-exporter system.geometry.isosurface_method=mc-cpu system.geometry.isosurface_resolution=256
+```
 
 ## Acknowledgement
 - [MVDream-threestudio](https://github.com/bytedance/MVDream-threestudio)
