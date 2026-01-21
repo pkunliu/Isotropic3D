@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Isotropic3D">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Isotropic3D: Image-to-3D Generation Based on a Single CLIP Embedding</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Isotropic3D: Image-to-3D Generation Based on a Single CLIP Embedding</h1>
+          <div class="is-size-5 publication-authors">
+            <!-- <span class="author-block">
+              Anonymous</span> -->
+            <span class="author-block">
+              <a href="">Pengkun Liu</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="">Yikai Wang</a><sup>2,3*</sup>,</span>
+            <span class="author-block">
+              <a href="">Hang Xiao</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="">Hongxiang Xue</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="">Xinzhou Wang</a><sup>4</sup>,
+            </span>
+            <span class="author-block">
+              <a href="">Fuchun Sun</a><sup>2*</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>College of Intelligent Robotics and Advanced Manufacturing, Fudan University</span>
+            <span class="author-block"><sup>2</sup>Department of Computer Science and Technology, Tsinghua University</span>
+            <span class="author-block"><sup>3</sup>School of Artificial Intelligence, Beijing Normal University</span>
+            <span class="author-block"><sup>4</sup>College of Electronic Information Engineering, Tongji University</span>
+            <span class="author-block"><sup>*</sup>Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2403.10395"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2403.10395"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/pkunliu/Isotropic3D"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://pkunliu.github.io/Isotropic3D"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Encouraged by the growing availability of pre-trained 2D diffusion models, image-to-3D generation by leveraging Score Distillation Sampling (SDS) is making remarkable progress. However, most existing approaches rely heavily on reference-view image supervision, which often disrupts the inductive priors of diffusion models and leads to distorted geometry or overly smooth back regions. To overcome these limitations, we propose Isotropic3D, a novel image-to-3D framework that takes only a single image CLIP embedding as input. Our method ensures azimuth-angle isotropy by relying exclusively on the SDS loss, avoiding overfitting to the reference image. Isotropic3D is consist of two main components: a EMA-conditioned multi-view diffusion model (EMA-MVD) and a Neural Radiance Field (NeRF). The core of EMA-MVD lies in a two-stage fine-tuning. Firstly, we fine-tune a text-to-3D diffusion model by substituting its text encoder with an image encoder, by which the model preliminarily acquires image-to-image capabilities. Secondly, we perform fine-tuning using our Explicit Multi-view Attention (EMA), which combines noisy multi-view images with the noise-free reference image as an explicit condition. After fine-tuning, Isotropic3D, built upon SDS with NeRF, can generate multi-view consistent images from a single CLIP embedding and reconstruct a 3D model with improved symmetry, well-proportioned geometry, richly colored textures, and reduced distortion. 
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_1.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Isotropic3D</span> is proficient in generating multi-view images that maintain mutual consistency, as well as producing a 3D model characterized by symmetrical and neat content, regular geometry, rich colored texture, and less distortion.
+      </h2>
+      <br>
+      <h2 class="title is-3 has-text-centered"> Method</h2>
+      <img src="./static/images/mvd.png" alt="Overview" width="100%">
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Isotropic3D</span> Pipeline
+      </h2>
+      <!-- <p>
+        The framework that generates consistent multi-view images from only a single CLIP embedding can be aligned with the input view while retaining the consistency of the output target view.
+      </p> -->
+      <br>
+      <!-- <div class="title has-text-centered">
+        <img src="./static/images/mvd.png" alt="Overview" width="90%">
+      </div> -->
+      
+      <!-- <h2 class="subtitle has-text-centered">
+        Multi-view Diffusion Pipeline
+      </h2> -->
+      <div class="title has-text-centered"> 
+        <img src="./static/images/atten.png" alt="Overview" width="70%"/>
+      </div>
+      <h2 class="subtitle has-text-centered">
+         <b>E</b>xplicit <b>M</b>ulti-view <b>A</b>ttention (EMA)
+        <!-- Explicit Multi-view Attention (EMA) -->
+      </h2>
+      <p>
+        <!-- Our training process is divided into two stages. In the first stage, we fine-tune a text-to-3D diffusion model by substituting its text encoder with an image encoder, by which the model preliminarily acquires image-to-image capabilities. In the second stage, we perform fine-tuning leveraging our <b>Explicit Multi-view Attention (EMA)</b> which combines noisy multi-view images with the noise-free reference image as an explicit condition. During inference, we <b>only</b>  need to send the <b>CLIP embedding</b> of the input view and camera pose to generate consistent high-quality images from multiple perspectives. -->
+      </p>
+    </div>
+  </div>
+</section>
+<br>
+
+<section class="hero comparison">
+  <div class="container is-max-desktop">
+    <div class="title has-text-centered">
+      <h2 class="title is-3">Qualitative comparisons with baseline models</h2>
+      <video id="comparison" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/compare_3D_1.mp4"
+                type="video/mp4">
+      </video>
+      <video id="comparison" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/compare_3D_2.mp4"
+                type="video/mp4">
+      </video>
+      
+    </div>
+  </div>
+</section>
+
+<!-- <br>
+<section class="hero comparison">
+  <div class="container is-max-desktop">
+    <div class="title has-text-centered">
+      <h2 class="title is-3">More additional comparisons</h2>
+      <video id="comparison" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/compare_3D_2.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section> -->
+
+<section class="hero example">
+  <div class="container is-max-desktop">
+    <div class="title has-text-centered">
+      <h2 class="title is-3">Qualitative comparisons in different settings</h2>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/L2_4k.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+      CCR is denote as channel-concatenate 
+      reference image. "NOTHING" means that it does not generate anything.
+      When removing CCR and L2 supervision together, this is equivalent to using only <b>a single CLIP embedding.<b>
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- <br>
+<section class="hero comparison">
+  <div class="container is-max-desktop">
+    <div class="title has-text-centered">
+      <h2 class="title is-3">More additional comparisons</h2>
+      <video id="comparison" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/compare_3D_2.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section> -->
+
+<section class="hero example">
+  <div class="container is-max-desktop">
+    <div class="title has-text-centered">
+      <h2 class="title is-3">Two groups of results are from two runs by Isotropic3D</h2>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_9.mp4"
+                type="video/mp4">
+      </video>
+
+    </div>
+  </div>
+</section>
+<br>
+
+<section class="hero example">
+  <div class="container is-max-desktop">
+    <div class="title has-text-centered">
+      <h2 class="title is-3">More results</h2>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_2.mp4"
+                type="video/mp4">
+      </video>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_3.mp4"
+                type="video/mp4">
+      </video>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_4.mp4"
+                type="video/mp4">
+      </video>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_5.mp4"
+                type="video/mp4">
+      </video>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_6.mp4"
+                type="video/mp4">
+      </video>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_7.mp4"
+                type="video/mp4">
+      </video>
+      <video id="example" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/more_results_8.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div>
+</section> -->
+
+
+<footer class="footer">
+  <!-- <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/Isotropic3D.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/Isotropic3D" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div> -->
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            Thanks to <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> for the website template.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

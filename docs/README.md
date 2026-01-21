@@ -1,0 +1,1 @@
+# Isotropic3D: Image-to-3D Generation Based on a Single CLIP Embedding

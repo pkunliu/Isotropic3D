@@ -1,7 +1,7 @@
 # Isotropic3D
 Official implementation for Isotropic3D: Image-to-3D Generation Based on a Single CLIP Embedding
 
-## | [Project Page](https://isotropic3d.github.io/) | [Paper](https://arxiv.org/abs/2403.10395) | [Weight](https://huggingface.co/pkunliu/Isotropic3D)
+## | [Project Page](https://pkunliu.github.io/Isotropic3D) | [Paper](https://arxiv.org/abs/2403.10395) | [Weight](https://huggingface.co/pkunliu/Isotropic3D)
 
 
 https://github.com/pkunliu/Isotropic3D/assets/48075709/412a040e-386e-4520-82b6-0b0a1a217a1c
